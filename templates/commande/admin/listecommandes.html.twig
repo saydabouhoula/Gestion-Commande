@@ -1,0 +1,184 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+
+{% block title %}
+    Gestion des commandes
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-rose card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">assignment</i>
+                            </div>
+                            <h4 class="card-title">Commandes</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- Error messages -->
+                                {% for msg in app.flashes('error') %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{ msg }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                                <!-- END Error messages-->
+
+                                <!-- Success messages -->
+                                {% for msg in app.flashes('info') %}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ msg }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+
+                                    </div>
+                                {% endfor %}
+                                <!-- END Success messages-->
+                            </div>
+
+                            <div class="col-3"></div>
+
+                            <div class="col-3">
+                                <div class="row">
+                                    <form id="form" method="POST" action="{{ path('recherche_commande') }}">
+                                        <input type="text" name="req" id="req" placeholder="Recherche...."
+                                               style="width: 100%;" required>
+                                        <input type="submit" class="btn btn-sm btn-info" value="Recherche">
+                                    </form>
+                                    <a class="btn btn-sm btn-success mt-1" id="loadcommande" href="#">Charger tous les
+                                        commandes</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ID Commande</th>
+                                        <th scope="col">Utilisateur</th>
+                                        <th scope="col">Date Creation</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody id="commande">
+                                    {% for commande in commandes %}
+                                        <tr>
+                                            <th scope="row" id="id_cmd">{{ commande.id }}</th>
+                                            <th scope="row"
+                                                id="user">{{ commande.user.prenom ~ ' ' ~ commande.user.nom }}</th>
+                                            <th scope="row"
+                                                id="datecreation">{{ commande.datecreation|date('d/m/Y') }}</th>
+                                            <th scope="row" id="status">{{ commande.status }}</th>
+                                            <th scope="row">
+                                                <a href="{{ path('detail_commande', { id : commande.id }) }}"
+                                                   class="btn btn-info btn-sm">
+                                                    <i class="material-icons">info</i>
+                                                </a>
+                                                <a href="{{ path('modifier_commande', { id : commande.id }) }}"
+                                                   class="btn btn-warning btn-sm">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                                <a href="{{ path('supprimer_commande', { id : commande.id }) }}"
+                                                   class="btn btn-danger btn-sm"
+                                                   onclick="return confirm('Veuillez vous vraiment supprimer cette commande ?');">
+                                                    <i class="material-icons">delete</i>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+        $(document).ready(function (response) {
+            $("#form").submit(function (event, req) {
+                var req = $("#req").val();
+                event.preventDefault();
+                $.ajax({
+                    url: '{{ path("recherche_commande") }}',
+                    dataType: 'json',
+                    method: 'POST',
+                    data: {
+                        req: $('#req').val()
+                    },
+                    async: true,
+                    success: function (data, status) {
+                        $("#req").val('');
+                        $('#commande').html('');
+                        for (i = 0; i < data.length; i++) {
+                            commande = data[i];
+                            msg = "'Veuillez vous vraiment supprimer cette commande ?'";
+                            var e = $('<tr><th scope="row" id="id"></th><th scope="row" id="user"></th><th id="datecreation" scope="row"></th><th scope="row" id="status"></th><th scope="row"><a href="/admin/commande/' + commande.id + '" class="btn btn-info btn-sm mr-1"><i class="material-icons">info</i></a><a href="/admin/commande/modifier/' + commande.id + '" class="btn btn-warning btn-sm mr-1"><i class="material-icons">edit</i></a><a id="supprimer" href="/admin/commande/supprimer/' + commande.id + '" class="btn btn-danger btn-sm" onclick="return confirm(' + msg + ');"><i class="material-icons">delete</i></a></th></tr>');
+                            $('#id', e).html(commande.id);
+                            $('#user', e).html(commande.user);
+                            $('#datecreation', e).html(new Date(commande.datecreation.date).toLocaleDateString());
+                            $('#status', e).html(commande.status);
+                            $('#commande').append(e);
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                        console.log(errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script language="javascript">
+        $(document).ready(function () {
+            $("#loadcommande").on("click", function (event) {
+                $.ajax({
+                    url: '{{ path("gestion_commande") }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: true,
+
+                    success: function (data, status) {
+                        $('#commande').html('');
+                        console.log(data);
+                        for (i = 0; i < data.length; i++) {
+                            commande = data[i];
+                            msg = "'Veuillez vous vraiment supprimer cette commande ?'";
+                            var e = $('<tr><th scope="row" id="id"></th><th scope="row" id="user"></th><th id="datecreation" scope="row"></th><th scope="row" id="status"></th><th scope="row"><a href="/admin/commande/' + commande.id + '" class="btn btn-info btn-sm mr-1"><i class="material-icons">info</i></a><a href="/admin/commande/modifier/' + commande.id + '" class="btn btn-warning btn-sm mr-1"><i class="material-icons">edit</i></a><a id="supprimer" href="/admin/commande/supprimer/' + commande.id + '" class="btn btn-danger btn-sm" onclick="return confirm(' + msg + ');"><i class="material-icons">delete</i></a></th></tr>');
+                            $('#id', e).html(commande.id);
+                            $('#user', e).html(commande.user);
+                            $('#datecreation', e).html(new Date(commande.datecreation.date).toLocaleDateString());
+                            $('#status', e).html(commande.status);
+                            $('#commande').append(e);
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

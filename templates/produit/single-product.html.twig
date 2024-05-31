@@ -1,0 +1,339 @@
+{% extends 'baseFrontOffice.html.twig' %}
+
+
+{% block title %}
+    <title>
+        product
+    </title>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const panierCount = document.querySelector('.cart-total');
+            axios.get("http://localhost:8000/panier/count").then(function (response) {
+                panierCount.textContent = response.data.count;
+            });
+        })
+
+        function onClickAddToCart(event) {
+            event.preventDefault();
+            const url = this.href;
+            const panierCount = document.querySelector('.cart-total');
+
+            axios.get(url).then(function (response) {
+                panierCount.textContent = response.data.count;
+            });
+        }
+
+        document.querySelectorAll('a.panier-add').forEach(function (link) {
+            link.addEventListener('click', onClickAddToCart)
+        })
+    </script>
+{% endblock %}
+
+{% block body %}
+    <body>
+
+    <!--== Start Page Header Area ==-->
+    <div class="page-header-wrap bg-img"
+         style="background-image: url('{{ asset('img_listeProduit/bg/page-header-bg.jpg') }}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <div class="page-header-content-inner">
+                            <h1>Product Details</h1>
+                            <ul class="breadcrumb">
+                                <li>
+                                    <a href="{{ path('afficheProduit') }}">Home</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('afficheProduit') }}">Shop</a>
+                                </li>
+                                <li class="current">
+                                    <a href="#">Product Details</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area ==-->
+
+
+    <!--== Start Page Content Wrapper ==-->
+    <div class="page-content-wrapper sp-y">
+        <div class="product-details-page-content">
+            <div class="container container-wide">
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                                class="row">
+
+
+                            <!-- Start Product Thumbnail Area -->
+                            <div class="col-md-5">
+                                <div class="product-thumb-area">
+                                    <div class="product-details-thumbnail">
+                                        <div class="product-thumbnail-slider" id="thumb-gallery">
+                                            <figure class="pro-thumb-item">
+
+
+                                                <img src="{{ asset('product/' ~ product.img) }}" alt="Product Details">
+
+                                                {% if product.tauxRemise>0 %}
+                                                    <div class="product-item__sale">
+                                                        <span class="sale-txt">{{ product.tauxRemise }}%</span>
+                                                    </div>
+                                                {% endif %}
+
+                                        </div>
+                                        <a href="#thumb-gallery" class="btn-large-view btn-gallery-popup">View
+                                            Larger
+                                            <i class="fa fa-search-plus"></i>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- End Product Thumbnail Area -->
+
+                            <!-- Start Product Info Area -->
+                            <div class="col-md-7">
+                                <div class="product-details-info-content-wrap">
+                                    <div class="prod-details-info-content">
+                                        <h2>{{ product.nom }}</h2>
+                                        <h5 class="price">
+                                            <strong>Price:</strong>
+                                            <span class="price-amount">
+														{% if product.tauxRemise>0 %}
+
+															<del>$
+																{{ product.prix }}</del>
+															${{ product.prix - (product.prix  * (product.tauxRemise / 100 )) }}</span>
+                                            {% else %}
+                                                ${{ product.prix }}</span>
+                                            {% endif %}
+                                        </h5>
+                                        <p>{{ product.descr }}</p>
+                                        <div class="product-config">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th class="config-label">Color</th>
+                                                        <td class="config-option">
+                                                            <div class="config-color">
+                                                                <a href="#">Black</a>
+                                                                <a href="#">Blue</a>
+                                                                <a href="#">Green</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="config-label">Size</th>
+                                                        <td class="config-option">
+                                                            <div class="config-color">
+                                                                <a href="#">Large</a>
+                                                                <a href="#">Medium</a>
+                                                                <a href="#">Small</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="product-action">
+                                            <div class="action-top d-sm-flex">
+                                                <div class="pro-qty mr-3 mb-4 mb-sm-0">
+                                                    <label for="quantity" class="sr-only">Quantity</label>
+                                                    <input type="text" id="quantity" title="Quantity" value="1"></div>
+                                                <a href="{{ path('panier_add',{'id' : product.id}) }}"
+                                                   class="btn btn-bordered panier-add">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="product-meta">
+												<span class="sku_wrapper">SKU:
+													<span class="sku">N/A</span>
+												</span>
+                                            <span class="posted_in">Categories:
+													<a href="#">Best Seller,</a>
+													<a href="#">Parts,</a>
+													<a href="#">Shop</a>
+												</span>
+                                            <span class="tagged_as">Tags:
+													<a href="#">Seller,</a>
+													<a href="#">Modern,</a>
+													<a href="#">Parts</a>
+												</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Product Info Area -->
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div
+                                        class="product-description-review">
+
+
+                                    <!-- Product Description Tab Menu -->
+                                    <ul class="nav nav-tabs desc-review-tab-menu" id="desc-review-tab" role="tablist">
+                                        <li>
+                                            <a class="active" id="desc-tab" data-toggle="tab" href="#descriptionContent"
+                                               role="tab">{{ product.descr }}</a>
+                                        </li>
+                                        <li>
+                                            <a id="profile-tab" data-toggle="tab" href="#reviewContent">Review (3)</a>
+                                        </li>
+                                    </ul>
+
+                                    <!-- Product Description Tab Content -->
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="descriptionContent">
+                                            <div class="description-content">
+                                                <p>{{ product.descr }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="reviewContent">
+                                            <div class="product-rating-wrap">
+                                                <div class="average-rating">
+                                                    <h4>4.8
+                                                        <span>(Overall)</span>
+                                                    </h4>
+                                                    <span>Based on 2 Comments</span>
+                                                </div>
+                                                <div class="display-ratings">
+                                                    <div class="rating-item">
+                                                        <div class="rating-author-pic"><img
+                                                                    src="{{ asset('img_listeProduit/extra/author-1.jpg') }}"
+                                                                    alt="author"></div>
+                                                        <div class="rating-author-txt">
+                                                            <div class="rating-star">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div>
+                                                            <div class="rating-meta">
+                                                                <h3>Cristopher Lee</h3>
+                                                                <span class="time">- 07,
+																																																																							                                                                    Jun</span>
+                                                            </div>
+                                                            <p>Wonderful collection of WooThemes classics! A must buy
+                                                                for all Woo fans.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-item">
+                                                        <div class="rating-author-pic"><img
+                                                                    src="{{ asset('img_listeProduit/extra/author-2.jpg') }}')}}"
+                                                                    alt="author"></div>
+                                                        <div class="rating-author-txt">
+                                                            <div class="rating-star">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-half-empty"></i>
+                                                            </div>
+                                                            <div class="rating-meta">
+                                                                <h3>Raju Ahammad</h3>
+                                                                <span class="time">- 02, Jun</span>
+                                                            </div>
+                                                            <p>Voluptatem quia voluptas sit aspernat uptatem sequi Neque
+                                                                porro.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="rating-form-wrapper">
+                                                    <h3>Add your Reviews</h3>
+                                                    <form action="#" method="post">
+                                                        <div class="rating-form row">
+                                                            <div class="col-12">
+                                                                <h5>Your Rating:</h5>
+                                                                <div class="rating-star fix mb-20">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-input-item mt-30 mt-md-0">
+                                                                    <label for="name" class="sr-only">Name</label>
+                                                                    <input type="text" id="name" placeholder="Name">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-input-item mt-30 mt-md-0">
+                                                                    <label for="email" class="sr-only">Email</label>
+                                                                    <input type="email" id="email" placeholder="Email">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div class="form-input-item mt-30 mb-40">
+                                                                    <label for="your-review"
+                                                                           class="sr-only">review</label>
+                                                                    <textarea rows="4" name="review" id="your-review"
+                                                                              placeholder="Write a review"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mt-22">
+                                                                <button class="btn btn-brand">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </body>
+    </div>
+    <!--== End Page Content Wrapper ==-->
+
+
+    <!-- Scroll Top Button -->
+    <button class="btn-scroll-top">
+        <i class="ion-chevron-up"></i>
+    </button>
+
+    <!--== Start Responsive Menu Wrapper ==-->
+    <aside class="off-canvas-wrapper off-canvas-menu">
+        <div class="off-canvas-overlay"></div>
+        <div
+                class="off-canvas-inner">
+            <!-- Start Off Canvas Content -->
+            <div class="off-canvas-content">
+                <div class="off-canvas-header">
+                    <div class="logo">
+                        <a href="index.html"><img src="{{ asset('img_listeProduit/logo.png') }}" alt="Logo"></a>
+                    </div>
+                    <div class="close-btn">
+                        <button class="btn-close">
+                            <i class="ion-android-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Content Auto Generate Form Main Menu Here -->
+                <div class="res-mobile-menu mobile-menu"></div>
+            </div>
+        </div>
+    </aside>
+    <!--== End Responsive Menu Wrapper ==--></body>{% endblock %}

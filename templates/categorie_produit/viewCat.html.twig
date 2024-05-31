@@ -1,0 +1,55 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}affichier un produit
+{% endblock %}
+
+
+{% block body %}
+	<link rel="stylesheet" href="{{asset('cssCheckout/app.min.css')}}">
+	<script src="{{asset('js/app.min.js')}}"></script>
+
+
+	<div class="content col-6 mx-auto">
+				<a class="btn btn-info" href="{{ path('product_index') }}">< Liste Produit</a>
+
+
+					<!-- Checkout Form Area Start -->
+					<div class="checkout-billing-details-wrap">
+						<h2>Détail Catégorie</h2>
+						<div class="billing-form-wrap">
+							<form>
+
+								<div class="input-item">
+
+                                    
+
+                                         <div class="input-item ">
+										Id :
+                                        <input type="text" value={{ form.vars.value.id }} disabled>
+									</div> 
+
+									</div>
+
+
+									</div>
+
+									<div class="input-item ">
+										nom de Catégorie :
+                                        <input type="text" value={{ form.nomCat.vars.value }} disabled>
+									</div>
+                                    <br>
+
+                                    <div class="input-item">
+										Description :
+										<input type="text" value={{ form.descriptionCat.vars.value }} disabled>
+									</div>
+
+
+
+								</form>
+							</div>
+						</div>
+				</div>
+
+
+			{% endblock %}

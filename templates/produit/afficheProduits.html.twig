@@ -1,0 +1,265 @@
+{% extends 'baseFrontOffice.html.twig' %}
+
+
+{% block title %}
+    <title>
+        product
+    </title>
+{% endblock %}
+
+{% block head %}
+    <!--== Favicon ==-->
+    <link
+            rel="shortcut icon" href="{{ asset('public/img_listeProduit/favicon.ico') }}" type="image/x-icon">
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700%7CPoppins:400,400i,500,600&amp;display=swap"
+          rel="stylesheet">
+
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    </head>{% endblock %}
+{% block js %}
+    <!--=======================Javascript============================-->
+    <script src="public/js/app.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const panierCount = document.querySelector('.cart-total');
+            axios.get("http://localhost:8000/panier/count").then(function (response) {
+                panierCount.textContent = response.data.count;
+            });
+        })
+
+        function onClickAddToCart(event) {
+            event.preventDefault();
+            const url = this.href;
+            const panierCount = document.querySelector('.cart-total');
+
+            axios.get(url).then(function (response) {
+                panierCount.textContent = response.data.count;
+            });
+        }
+
+        document.querySelectorAll('a.panier-add').forEach(function (link) {
+            link.addEventListener('click', onClickAddToCart)
+        })
+    </script>
+
+{% endblock %}
+
+
+{% block css %}
+
+    <link rel="stylesheet" href="{{ asset('css/app.min.css') }}">{% endblock %}{% block body %}
+    <body>
+
+
+<!--== Start Page Header Area ==-->
+<div class="page-header-wrap bg-img" style="background-image: url('img_listeProduit/bg/page-header-bg.jpg');">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
+                    <div class="page-header-content-inner">
+                        <h1>Shop</h1>
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="{{ path('afficheProduit') }}">Home</a>
+                            </li>
+                            <li class="current">
+                                <a href="#">Shop</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Header Area ==-->
+
+<!--== Start Page Content Wrapper ==-->
+<div class="page-content-wrapper sp-y">
+    <div class="shop-page-action-bar mb-30">
+        <div class="container container-wide">
+            <div class="action-bar-inner">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="shop-layout-switcher mb-15 mb-sm-0">
+                            <ul class="layout-switcher nav">
+                                <li data-layout="grid" class="active">
+                                    <i class="fa fa-th"></i>
+                                </li>
+                                <li data-layout="list">
+                                    <i class="fa fa-th-list"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="sort-by-wrapper">
+                            <label for="sort" class="sr-only">Sort By</label>
+                            <select name="sort" id="sort">
+                                <option value="sbp">Sort By Popularity</option>
+                                <option value="sbn">Sort By Newest</option>
+                                <option value="sbt">Sort By Trending</option>
+                                <option value="sbr">Sort By Rating</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shop-page-product">
+        <div class="container container-wide">
+            <div class="product-wrapper product-layout layout-grid">
+                <div
+                        class="row mtn-30">
+
+                    <!-- Start Product Item -->
+                    {% for product in products %}
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
+                            <div class="product-item">
+                                <a href="{{ path('singleProduct', {'id': product.id}) }}"></a>
+                                <div class="product-item__thumb">
+                                    <a href="{{ path('singleProduct', {'id': product.id}) }}">
+                                        <img class="thumb-primary" src="img/product/{{ product.img }}"
+                                             alt="Product">
+                                        <img class="thumb-secondary" src="img/product/{{ product.img }}"
+                                             alt="Product">
+                                    </a>
+                                    <div class="ratting">
+											<span>
+												<i class="ion-android-star"></i>
+											</span>
+                                        <span>
+												<i class="ion-android-star"></i>
+											</span>
+                                        <span>
+												<i class="ion-android-star"></i>
+											</span>
+                                        <span>
+												<i class="ion-android-star"></i>
+											</span>
+                                        <span>
+												<i class="ion-android-star-half"></i>
+											</span>
+                                    </div>
+                                </div>
+                                <div class="product-item__content">
+                                    <div class="product-item__info">
+                                        <h4 class="title">
+                                            <a href="{{ path('singleProduct', {'id': product.id}) }}">{{ product.nom }}</a>
+                                        </h4>
+                                        <span class="price">
+												<strong>Price:</strong>
+													{% if product.tauxRemise>0 %}
+
+													<del>{{ product.prix }}</del>  ${{ product.prix - (product.prix  * (product.tauxRemise / 100 )) }}</span>
+                                        {% else %}
+                                            ${{ product.prix }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="product-item__action">
+
+                                        <button class="btn-add-to-cart">
+                                            <span>${{ product.prix - (product.prix  * (product.tauxRemise / 100 )) }}</span>
+                                        </button>
+                                        <button class="btn-add-to-cart">
+                                            <a href="{{ path('panier_add',{'id' : product.id}) }}" class="panier-add">
+                                                <i class="ion-bag"></i>
+                                            </a>
+                                        </button>
+                                        <button class="btn-add-to-cart">
+                                            <i class="ion-ios-heart-outline"></i>
+                                        </button>
+                                        <button class="btn-add-to-cart">
+                                            <i class="ion-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="product-item__desc">
+                                        <p>{{ product.descr }}</p>
+                                    </div>
+                                </div>
+                                {% if product.tauxRemise>0 %}
+                                    <div class="product-item__sale">
+                                        <span class="sale-txt">{{ product.tauxRemise }}%</span>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- End Product Item -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shop-page-action-bar mt-30">
+        <div class="container container-wide">
+            <div class="action-bar-inner">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <nav class="pagination-wrap mb-10 mb-sm-0">
+                            <ul class="pagination">
+                                <li class="active">
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">3</a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="ion-ios-arrow-thin-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-sm-6 text-center text-sm-right">
+                        <p>Showing 1–12 of 26 results</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Content Wrapper ==-->
+
+
+<!-- Scroll Top Button -->
+<button class="btn-scroll-top">
+    <i class="ion-chevron-up"></i>
+</button>
+<!--== Start Responsive Menu Wrapper ==-->
+<aside class="off-canvas-wrapper off-canvas-menu">
+    <div class="off-canvas-overlay"></div>
+    <div
+            class="off-canvas-inner">
+        <!-- Start Off Canvas Content -->
+        <div class="off-canvas-content">
+            <div class="off-canvas-header">
+                <div class="logo">
+                    <a href="index.html"><img src="public/img_listeProduit/logo.png" alt="Logo"></a>
+                </div>
+                <div class="close-btn">
+                    <button class="btn-close">
+                        <i class="ion-android-close"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Content Auto Generate Form Main Menu Here -->
+            <div class="res-mobile-menu mobile-menu"></div>
+        </div>
+    </div>
+</aside>
+<!--== End Responsive Menu Wrapper ==-->
+    </body>{% endblock %}

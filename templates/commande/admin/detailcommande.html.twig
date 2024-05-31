@@ -1,0 +1,56 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+
+{% block title %}
+    Gestion des commande
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-rose card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">assignment</i>
+                            </div>
+                            <h4 class="card-title">Detail du commande</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Produit</th>
+                                        <th scope="col">Quantité</th>
+                                        <th scope="col">Prix Unitaire</th>
+                                        <th scope="col">Prix Total</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for detailCmd in detailCmds %}
+                                        <tr>
+                                            <td>{{ detailCmd.produit.nom }}</td>
+                                            <td>{{ detailCmd.qte }}</td>
+                                            <td>{{ detailCmd.produit.prix }}</td>
+                                            <td>{{ detailCmd.qte * detailCmd.produit.prix }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <th scope="row">Prix Total : {{ total }}</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

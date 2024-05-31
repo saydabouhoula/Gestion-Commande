@@ -1,0 +1,91 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}affichier un produit
+{% endblock %}
+
+
+{% block body %}
+	<link rel="stylesheet" href="{{asset('cssCheckout/app.min.css')}}">
+	<script src="{{asset('js/app.min.js')}}"></script>
+
+<body>
+	<div class="content col-6 mx-auto">
+				<a class="btn btn-info" href="{{ path('product_index') }}">< Liste Produit</a>
+
+
+					<!-- Checkout Form Area Start -->
+					<div class="checkout-billing-details-wrap">
+						<h2>Détail de Produit</h2>
+						<div class="billing-form-wrap">
+							<form>
+
+								<div class="input-item">
+
+									<div class="input-item mt-0">
+										<strong >nom de Produit :
+										<input type="text" id="f_name" value={{ form.nom.vars.value }} disabled></div>
+
+									<div class="input-item">
+										Description :
+										<textarea cols="30" rows="3" disabled>{{ form.descr.vars.value }}</textarea>
+									</div>
+
+
+									<div class="input-item">
+										Catégorie :
+										<input type="email" value={{ form.categ.vars.value }} disabled>
+									</div>
+
+
+									<div class="input-item">
+										marque :
+										<input type="email" id="email" value={{ form.marque.vars.value }} disabled>
+									</div>
+
+
+									<div class="input-item">
+										model :
+										<input type="email" id="email" value={{ form.model.vars.value }} disabled>
+									</div>
+
+									<div class="input-item">
+										prix :
+										<input type="number" id="prix" value={{ form.prix.vars.value }} disabled>
+									</div>
+
+									<div class="input-item">
+										Taux de Remise :
+										<input type="number" id="prix" value={{ form.tauxRemise.vars.value }} disabled>
+									</div>
+
+									<div class="input-item">
+										Stock :
+										<input type="number" id="prix" value={{ form.stock.vars.value }} disabled>
+									</div>
+
+									<div class="input-item">
+										Image :
+										<input type="text" id="prix" value={{ form.img.vars.value }} disabled>
+									</div>
+
+
+									<div class="input-item ">
+										Le catégorie de Produit :
+										{{ form_widget(form.nomCat, {
+											'attr': {'class': 'form-check-input'},
+											'disabled': true,
+											'choice_label': 'nomCat'
+										}) }}
+									</div>
+
+
+									<br>
+
+
+								</form>
+							</div>
+						</div>
+				</div>
+
+
+			{% endblock %}

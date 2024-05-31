@@ -1,0 +1,47 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block body %}
+	<link rel="stylesheet" href="{{asset('cssCheckout/app.min.css')}}">
+
+
+	<div
+		class="content col-6 mx-auto">
+
+
+		<!-- Checkout Form Area Start -->
+		<div class="checkout-billing-details-wrap">
+			<center>
+				<h2>Détail de Produit</h2>
+			</center>
+			<div class="billing-form-wrap">
+
+				{{ form_start(form) }}
+
+
+				<div class="input-item">
+					<div class="input-item mt-0">
+						<br>{{ form_label(form.nomCat) }}</br>
+					{{ form_widget(form.nomCat) }}
+					{{ form_errors(form.descriptionCat) }}
+				</div>
+
+
+				<div class="input-item">
+					<div class="input-item mt-0">
+						<br>{{ form_label(form.descriptionCat) }}</br>
+					{{ form_widget(form.descriptionCat) }}
+				</div>
+				{% if form_errors(form.descriptionCat) %}
+					<div class="alert alert-danger">{{ form_errors(form.descriptionCat) }}</div>
+				{% endif %}
+
+
+				{{ form_end(form) }}
+				<br>
+				<button class="btn btn-info ">Enregister</button>
+			</div>
+
+
+		</div>
+	</div>
+</div></center></div>{% endblock %}

@@ -1,0 +1,44 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+api:
+    resource: ../src/Controller/
+    type: annotation
+
+api_commandes_update:
+    path: /api/commandes/{id}/{status}
+    controller: App\Controller\CommandeController::updateCommandes
+    methods: GET
+
+product_list:
+    path: /admin/product
+    controller: App\Controller\ProduitController::list
+
+product_create:
+    path: /admin/product/create
+    controller: App\Controller\ProduitController::create
+
+product_edit:
+    path: /admin/product/{id}/edit
+    controller: App\Controller\ProduitController::edit
+
+product_delete:
+    path: /admin/product/{id}/delete
+    controller: App\Controller\ProduitController::delete
+
+user_list:
+    path: /admin
+    controller: App\Controller\CategorieProduitController::list
+
+user_create:
+    path: /admin/create
+    controller: App\Controller\CategorieProduitController::create
+
+category_edit:
+    path: /admin/{id}/edit
+    controller: App\Controller\CategorieProduitController::edit
+
+category_delete:
+    path: /admin/{id}/delete
+    controller: App\Controller\CategorieProduitController::delete

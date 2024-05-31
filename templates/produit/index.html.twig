@@ -1,0 +1,175 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+
+{% block title %}
+	Material Dashboard PRO by Creative Tim
+{% endblock %}
+
+
+{% block body %}
+
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+
+
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header card-header-rose card-header-icon">
+							<div class="card-icon">
+								<i class="material-icons">assignment</i>
+							</div>
+							<h4 class="card-title">Product Tabels</h4>
+						</div>
+
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th class="text-center">#id</th>
+											<th>Nom</th>
+											<th>Catégorie</th>
+											<th class="text-right">Prix</th>
+											<th class="text-right">Modèle</th>
+											<th class="text-right">stock</th>
+											<th class="text-right"></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for product in products %}
+
+											<tr>
+												<td>{{ product.id }}</td>
+												<td>{{product.nom}}</td>
+												<td>{{product.categ}}</td>
+												<td class="text-right">&euro;
+													{{product.prix}}</td>
+												<td class="text-right">{{product.model}}</td>
+												<td class="text-right">{{product.stock}}</td>
+
+
+												<td class="td-actions text-right">
+													<a href="{{ path('product_view', {'id': product.id}) }}">
+														<button type="button" rel="tooltip" class="btn btn-info">
+															<i class="material-icons">visibility</i>
+														</button>
+
+														<a href="{{ path('product_edit', {'id': product.id}) }}">
+															<button type="button" rel="tooltip" class="btn btn-success">
+																<i class="material-icons">edit</i>
+															</button>
+														</a>
+
+														<a href="{{ path('product_delete', {'id': product.id}) }}">
+															<button type="button" rel="tooltip" class="btn btn-danger">
+																<i class="material-icons">close</i>
+															</button>
+														</a>
+													</td>
+												</td>
+											</tr>
+										{% endfor %}
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="card-body text-right">
+							<a href="{{ path('produit_new') }}">
+								<button class="btn btn-info">Add New Produit</button>
+							</a>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header card-header-rose card-header-icon">
+							<div class="card-icon">
+								<i class="material-icons">assignment</i>
+							</div>
+							<h4 class="card-title">Tableau de catégorie</h4>
+						</div>
+
+
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th class="text-center">#id_Catégorie</th>
+											<th>Nom Catégorie</th>
+											<th>Description Catégorie</th>
+											<th class="text-right"></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for catProduct in catProducts %}
+
+											<tr>
+												<td>{{catProduct.id }}</td>
+												<td>{{catProduct.nomCat}}</td>
+												<td>{{catProduct.descriptionCat}}</td>
+
+												<td class="td-actions text-right">
+													<a href="{{ path('view_category', {'id': catProduct.id}) }}">
+														<button type="button" rel="tooltip" class="btn btn-info">
+															<i class="material-icons">visibility</i>
+														</button>
+
+														<a href="{{ path('category_edit', {'id': catProduct.id}) }}">
+															<button type="button" rel="tooltip" class="btn btn-success">
+																<i class="material-icons">edit</i>
+															</button>
+														</a>
+
+														<a href="{{ path('category_delete', {'id': catProduct.id}) }}">
+															<button type="button" rel="tooltip" class="btn btn-danger">
+																<i class="material-icons">close</i>
+															</button>
+														</a>
+													</td>
+												</td>
+											</tr>
+										{% endfor %}
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="card-body text-right">
+							<a href="{{path('new_categorie')}}">
+								<button class="btn btn-info">Add New Produit</button>
+							</a>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

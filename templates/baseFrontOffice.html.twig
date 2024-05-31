@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <title>
+        {% block title %}
+            Lukas - Car Parts Store eCommerce HTML Template
+        {% endblock %}
+    </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    {% block head %}
+
+    <!--== Favicon ==-->
+    <link
+            rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700%7CPoppins:400,400i,500,600&amp;display=swap"
+          rel="stylesheet">
+
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+</head>
+
+{% endblock %}
+
+
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/app.min.css') }}">
+{% endblock %}
+
+
+<!--== Start Header Area ==-->
+
+<header class="header-area">
+    <div class="container container-wide">
+        <div class="row align-items-center">
+            <div class="col-sm-4 col-lg-2">
+                <div class="site-logo text-center text-sm-left">
+                    <a href="index.html">
+                        <img src="{{ asset('img_listeProduit/logo.png') }}" alt="Logo">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7 d-none d-lg-block">
+                <div class="site-navigation">
+                    <ul class="main-menu nav">
+                        <li class="has-submenu">
+                            <a href="index.html">Home</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="index.html">Home 1</a>
+                                </li>
+                                <li>
+                                    <a href="index-2.html">Home 2</a>
+                                </li>
+                                <li>
+                                    <a href="index-boxed.html">Home Box Layout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="about.html">About</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="shop.html">Shop</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="shop-left-sidebar.html">Shop Left Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="shop-right-sidebar.html">Shop Right Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="single-product.html">Single Product</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="blog.html">blog</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="blog.html">Blog Right Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="blog-details.html">Single Blog</a>
+                                </li>
+                                <li>
+                                    <a href="blog-details-sidebar.html">Single Blog Sidebar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{path('commande_index')}}">Commandes</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="index.html">Pages</a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{ path('afficheProduit') }}">Cart</a>
+                                </li>
+                                <li>
+                                    <a href="checkout.html">Checkout</a>
+                                </li>
+                                <li>
+                                    <a href="wishlist.html">Wishlist</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-8 col-lg-3">
+                <div class="site-action d-flex justify-content-center justify-content-sm-end align-items-center">
+                    <ul class="login-reg-nav nav">
+                        <li>
+                            <a href="#">Login</a>
+                        </li>
+                        <li>
+                            <a href="#">Register</a>
+                        </li>
+                    </ul>
+
+
+                    <!--******************************* Begin Card******************************************** -->
+                    <div class="mini-cart-wrap">
+                        <a href="{{ path('panier') }}" class="btn-mini-cart">
+                            <i class="ion-bag"></i>
+                            <span class="cart-total">...</span>
+                        </a>
+                        <!--**********************************End Card***************************************** -->
+
+
+                    </div>
+                </div>
+                <div class="responsive-menu d-lg-none">
+                    <button class="btn-menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</header><!--== End Header Area ==-->
+<body>
+{% block body %}{% endblock %}
+</body>
+{% block footer %}
+    <!--== Start Footer Area Wrapper ==-->
+    <footer class="footer-area">
+        <div class="footer-widget-area">
+            <div class="container container-wide">
+                <div class="row mtn-40">
+                    <div class="col-lg-3">
+                        <div class="widget-item">
+                            <div class="about-widget">
+                                <a href="index.html"><img src="{{ asset('img_listeProduit/logo-light.png') }}"
+                                                          alt="Logo"></a>
+                                <p>Lukas is the best parts shop for your car accessories. What kind of parts do you need
+                                    you
+                                    can get here soluta nobis</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Information</h4>
+                            <div class="widget-body">
+                                <ul class="widget-list">
+                                    <li>
+                                        <a href="#">Our company</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact us</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Our services</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Why We?</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Careers</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Quicklink</h4>
+                            <div class="widget-body">
+                                <ul class="widget-list">
+                                    <li>
+                                        <a href="#">About</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Blog</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Shop</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Cart</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Support</h4>
+                            <div class="widget-body">
+                                <ul class="widget-list">
+                                    <li>
+                                        <a href="#">Blog</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Return Policy</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Online Support</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Money Back</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Store Information</h4>
+                            <div class="widget-body">
+                                <address>2005 Stokes Isle Apartment. 896, Washington 10010, USA<br>
+                                    https://example.com<br>(+68) 120034509
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="copyright-content">
+                            <p>Copyright © 2019 Lukas. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--== End Footer Area Wrapper ==-->{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ asset('js/app.min.js') }}"></script>
+
+{% block js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const panierCount = document.querySelector('.cart-total');
+            axios.get("http://localhost:8000/panier/count").then(function (response) {
+                panierCount.textContent = response.data.count;
+            });
+        })
+    </script>
+{% endblock %}
+   </html>

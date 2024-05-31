@@ -1,0 +1,17 @@
+# config/serialization.yaml
+App\Entity\Commande:
+  attributes:
+    date_creation:
+      groups: ["read"]
+    status:
+      groups: ["read"]
+    user:
+      groups: ["read"]
+    payment_method:
+      groups: ["read"]
+    payment_brand:
+      groups: ["read"]
+    cc_last:
+      groups: ["read"]
+    payment_status:
+      groups: ["read"]

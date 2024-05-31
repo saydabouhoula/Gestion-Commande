@@ -1,0 +1,52 @@
+{% extends 'baseFrontOffice.html.twig' %}
+
+{% block title %}Votre Commandes{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        {% for msg in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ msg }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+        {% endfor %}
+        {% if cmd_infos is empty %}
+            <h5 class="text-danger text-center">vous n'avez pas encore de commandes</h5>
+        {% else %}
+            <h5 class="text-center">HISTORIQUE DE VOS COMMANDES</h5>
+            <hr>
+            <p>Vous trouverez ici vos commandes passées depuis la création de votre compte</p>
+            <hr>
+            <table class="table table-bordered text-center mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">ID Commande</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cmd_info in cmd_infos %}
+                    <tr>
+                        <th scope="row">{{ cmd_info.commande.id }}</th>
+                        <th scope="row">{{ cmd_info.commande.datecreation | date('d/m/Y') }}</th>
+                        <th scope="row">
+                            {{ cmd_info.commande.status }}
+                        </th>
+                        <th scope="row">
+                            <a href="{{ path('detail_cmd_user', { 'id' : cmd_info.commande.id }) }}"
+                               class="btn btn-info btn-sm">Détail</a>
+                        </th>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

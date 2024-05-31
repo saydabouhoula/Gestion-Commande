@@ -1,0 +1,57 @@
+{% extends 'baseFrontOffice.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h5 class="text-center">DÉTAILS DE LA COMMANDE</h5>
+        <hr>
+        <p>Commande n°{{ commande.id }} du {{ commande.datecreation | date('d/m/Y') }}</p>
+        <hr>
+        <p>Méthode de payment : <b>{{ commande.paymentmethod }}</b></p>
+        <p>
+            Type de payment :
+
+            {% if commande.paymentbrand == 'Visa' %}
+                <img src="{{ asset('/img/cc/visa.png') }}" width="35px">
+            {% elseif commande.paymentbrand == 'MasterCard' %}
+                <img src="{{ asset('/img/cc/masterCard.png') }}" width="35px">
+            {% else %}
+                <b>{{ commande.paymentbrand }}</b>
+            {% endif %}
+        </p>
+        <p>Status de payment : <b>{{ commande.paymentstatus }}</b></p>
+        <p>Carte Crédit : <b>**** **** **** {{ commande.cclast }}</b></p>
+        <hr>
+        <table class="table table-bordered text-center mb-0">
+            <thead>
+            <tr>
+                <th scope="col">Produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix Unitaire</th>
+                <th scope="col">Prix Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for detailCmd in detailCmds %}
+                <tr>
+                    <td>
+                        <div class="cart-product-item d-flex align-items-center">
+                            <a href="{{ path('singleProduct', {id: detailCmd.produit.id}) }}" class="product-thumb">
+                                <img src="/img/product/{{ detailCmd.produit.img }}" alt="Product" width="100px">
+                            </a>
+                            <a href="{{ path('singleProduct', {id: detailCmd.produit.id}) }}"
+                               class="product-name">{{ detailCmd.produit.nom }}</a>
+                        </div>
+                    </td>
+                    <td>{{ detailCmd.qte }}</td>
+                    <td>{{ detailCmd.produit.prix }}</td>
+                    <td>{{ detailCmd.qte * detailCmd.produit.prix }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"></td>
+                <th scope="row">Prix Total : {{ total }}</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}
+	Modifier un produit
+{% endblock %}
+
+
+{% block body %}
+	<link rel="stylesheet" href="{{asset('cssCheckout/app.min.css')}}">
+	<script src="{{asset('js/app.min.js')}}"></script>
+
+
+	<div class="content col-6 mx-auto">
+		<center>
+
+
+			<!-- Checkout Form Area Start -->
+			<div class="checkout-billing-details-wrap">
+				<h2>Détail de Produit</h2>
+				<div class="billing-form-wrap">
+					{{ form_start(form) }}
+
+						<div class="input-item">
+							<div class="input-item mt-0"></div>
+						
+						{{ form_end(form) }}
+                        <br>
+                        <button class="btn btn-success">Enregister</button>
+					</div>
+				</div>
+			</center>
+		</div>
+
+
+	{% endblock %}
